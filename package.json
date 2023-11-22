@@ -10,6 +10,7 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue src"
   },
   "dependencies": {
+    "motion": "^10.16.4",
     "vue": "^3.3.8"
   },
   "devDependencies": {
