@@ -1,38 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
+import { animate } from "motion";
 
-defineProps<{ msg: string }>()
+const show = ref(true);
 
-const count = ref(0)
+function onBeforeEnter(el: Element) {
+  animate(el, { transform: "scale(45deg)" }, { duration: 0.5 });
+}
+
+function onEnter(el: Element, done: () => void) {
+  animate(el, { transform: "rotate(0deg)" }, { duration: 0.5 });
+  done();
+}
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <button @click="show = !show">Toggle</button>
 
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
-  </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/vuejs/language-tools" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <Transition @before-enter="onBeforeEnter" @enter="onEnter" :css="false">
+    <div class="gsap-box" v-if="show"></div>
+  </Transition>
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+.gsap-box {
+  background: #42b883;
+  margin-top: 20px;
+  width: 30px;
+  height: 30px;
 }
 </style>
