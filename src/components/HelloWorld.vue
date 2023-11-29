@@ -4,12 +4,13 @@ import { animate } from "motion";
 
 const show = ref(true);
 
-function onBeforeEnter(el: Element) {
-  animate(el, { transform: "scale(45deg)" }, { duration: 0.5 });
-}
-
-function onEnter(el: Element, done: () => void) {
-  animate(el, { transform: "rotate(0deg)" }, { duration: 0.5 });
+async function onEnter(el: Element, done: () => void) {
+  await animate(
+    el,
+    { transform: ["rotate(90deg)", "translateX(100px) rotate(45deg)", "none"] },
+    { duration: 2.5 }
+  ).finished;
+  console.log("onEnter finished");
   done();
 }
 </script>
@@ -17,7 +18,7 @@ function onEnter(el: Element, done: () => void) {
 <template>
   <button @click="show = !show">Toggle</button>
 
-  <Transition @before-enter="onBeforeEnter" @enter="onEnter" :css="false">
+  <Transition @enter="onEnter" :css="false">
     <div class="gsap-box" v-if="show"></div>
   </Transition>
 </template>
